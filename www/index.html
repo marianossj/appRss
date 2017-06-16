@@ -12,7 +12,8 @@
 
 
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-
+    <script src="lib/moment/moment.js"></script>
+    <script src="lib/angular-moment/angular-moment.js"></script>
     <script src="cordova.js"></script>
 
 
@@ -21,14 +22,32 @@
   <body ng-app="appRss" ng-controller="appRssCtrl">
 
     <ion-pane>
-      <ion-header-bar class="bar-stable">
+      <ion-header-bar class="bar bar-header bar-positive">
         <h1 class="title">Feed Reader</h1>º
       </ion-header-bar>
       <ion-content>
-        <div ng-repeat="noti in noticia">
-          {{noti.title}}
-      </div>
+        <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="loadNewNoti()">
+  </ion-refresher>
+        <div class="list">
 
+          <a class="item item-thumbnail-left"
+           href="{{noti.url}}" target="_blank"
+            ng-repeat="noti in noticia track by noti.id">
+            <img ng-src="{{noti.thumbnail}}"
+            ng-if="noti.thumbnail.startsWith('http')">
+          <h2 class="noti-title">{{noti.title}}</h2>
+          <p>
+          <span am-time-ago="noti.created_utc | amFromUnix"></span>
+            -
+          {{noti.domain}}
+        </p>
+
+          </a>
+      </div>
+      <ion-infinite-scroll on-infinite="loadOlderNoti()" distance="1%">
+  </ion-infinite-scroll>
       </ion-content>
     </ion-pane>
   </body>
