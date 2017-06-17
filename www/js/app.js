@@ -8,13 +8,13 @@ app.controller('appRssCtrl',function($http,$scope){
 
   function loadNoti(params,callback){
 
-    $http.get('https://www.reddit.com/r/Android/new/.json',{params: params})
+    $http.get('http://localhost:4444/feed',{params: params})
       .success(function(response){
         var noticia=[];
-      angular.forEach(response.data.children, function(child){
+      angular.forEach(response.items, function(child){
 
-          $scope.noticia.push(child.data);
-          console.log(child.data);
+          $scope.noticia.push(child);
+          console.log(child);
       });
       callback(noticia);
     });

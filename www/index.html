@@ -32,18 +32,18 @@
   </ion-refresher>
         <div class="list">
 
-          <a class="item item-thumbnail-left"
+          <a class="item "
            href="{{noti.url}}" target="_blank"
-            ng-repeat="noti in noticia track by noti.id">
-            <img ng-src="{{noti.thumbnail}}"
-            ng-if="noti.thumbnail.startsWith('http')">
+            ng-repeat="noti in noticia">
+
           <h2 class="noti-title">{{noti.title}}</h2>
           <p>
-          <span am-time-ago="noti.created_utc | amFromUnix"></span>
+            {{noti.description}}
+
             -
           {{noti.domain}}
         </p>
-
+  <span>{{noti.created | amUtc | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
           </a>
       </div>
       <ion-infinite-scroll on-infinite="loadOlderNoti()" distance="1%">
